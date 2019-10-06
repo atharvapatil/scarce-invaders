@@ -12,6 +12,7 @@ app.use(express.static('public'));
 
 //Global Vars:
 let playerHandler;
+let playing = false;
 
 
 let Activate = function(){
@@ -27,26 +28,66 @@ let io = require('socket.io').listen(server);
 
 // Listen for clients to connect
 io.on('connection', function (socket) {
+  ///////////////////////
+  // PLAYER CONNECTIONS//
+  ///////////////////////
   console.log('A client connected: ' + socket.id);
 
   socket.on('setNumPlayers', function (data) {
-    playerHandler.updateRequiredPlayers(data);
+    playerHandler.setRequiredPlayers(data);
+    tryStartGame();
+    tryEndGame();
   });
 
   // Add new player to list of players.
   socket.on('playerinfo', function (data) {
     let player = new Player(socket.id, data.name);
-    playerHandler.addPlayer(player);
+    playerHandler.addPlayer(player);  
+    console.log("Num Players is now: " + playerHandler.getNumPlayers());
+    console.log("Req Players is now: " + playerHandler.getRequiredPlayers());
+    
+    tryStartGame();
+    
   });
-
   // Listen for this client to disconnect
   socket.on('disconnect', function () {
     //If id is associated with player, remove player from list.
     playerHandler.removePlayerByID(socket.id);
     console.log("A client has disconnected " + socket.id);
+    tryEndGame();
   });
 });
 
+let tryStartGame = () => {
+  //When enough players connect (and we're not already playing), start!
+  if(playerHandler.getRequiredPlayers() <= playerHandler.getNumPlayers() ){
+    if(playing == false){
+      console.log("Starting Game!")
+      startGame();
+    }else{
+      console.log("Game Already Started!")
+    }
+  }
+}
+
+let tryEndGame = () => {
+  //When enough players connect (and we're not already playing), start!
+  if(playerHandler.getRequiredPlayers() > playerHandler.getNumPlayers() ){
+
+    console.log("Ending Game")
+    endGame();
+
+  }
+}
+
+let startGame = function(){
+  playing = true;
+  io.emit("begin");
+}
+let endGame = function(){
+  playing = false;
+  io.emit("end");
+}
 
 
 class PlayerHandler{
@@ -55,9 +96,8 @@ class PlayerHandler{
     this.players = [];
     this.requiredPlayers = 10;
   }
-  updateRequiredPlayers(num){
-    this.requiredPlayers = num;
-  }
+
+  
   addPlayer(player){
     console.log("New player: " + player.name);
     this.players.push(player);
@@ -77,16 +117,29 @@ class PlayerHandler{
       this.players.splice(indexToRemove, 1);
       this.printPlayers();
     }
-    
   }
+
+  // Getters and Setters
+
+  getNumPlayers(){
+    return this.players.length;
+  }
+
+  getRequiredPlayers(){
+    return this.requiredPlayers;
+  }
+
+  setRequiredPlayers(num){
+    this.requiredPlayers = num;
+  }
+
+  // Output Functions
 
   printPlayers(){
     console.log("PLAYER LIST:")
     for (let i = 0; i < this.players.length; i++) {
       let player = this.players[i];
       console.log("Player: " + i + ": " + player.name);
-
-      
     }
   }
 }
