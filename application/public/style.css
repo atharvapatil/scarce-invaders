@@ -57,3 +57,45 @@ border-radius: 4px;
       text-decoration: none;
 
 }
+
+.show{
+  display: block;
+  margin-left: auto;
+  margin-right: block;
+  max-width: 40%;
+  align-content: center;
+}
+
+
+
+form{
+  font-family: "Helvetica", Arial, sans-serif;
+  font-style: Bold;
+  text-align: left;
+}
+
+#inputText{
+  display: block;
+  width: 50%;
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-family: "Helvetica", Arial, sans-serif;
+  font-size: 16px;
+}
+
+#inputSumbit {
+  width: 50%;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 8px;
+  cursor:  pointer;
+  border-radius: 4px;
+  height: 48px;
+  font-style: Bold;
+}
