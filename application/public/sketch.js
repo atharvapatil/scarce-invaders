@@ -17,17 +17,17 @@ let spaceship;
 let enemies = [];
 let lasers = [];
 
-let font;
+let nasafont;
 
 function preload(){
-  font = loadFont('assets/nasalization.ttf');
+  nasafont = loadFont('assets/nasalization.ttf');
 }
 
 function setup() {
 
   rectMode(CENTER);
-  textFont = font;
-  textAlign(RIGHT);
+  textFont(nasafont);
+  textAlign(CENTER);
   textSize(36);
 
   //Instantiate server connection to handle all socket functions
@@ -39,7 +39,8 @@ function setup() {
 
   createCanvas(1280, 720);
 
-  spaceship = new Spaceship(createVector(width/2, height - 50));
+  let ammo = 25;
+  spaceship = new Spaceship(createVector(width/2, height - 50), ammo);
   Enemy.createEnemies(10);
 
 }
@@ -63,9 +64,18 @@ function draw() {
   }
 }
 
+/////////
+// HUD //
+/////////
+
 function HUD(){
   fill(255);
-  text("Health: " + 0, width/2, 20);
+  text("Health: " + 100, width/2, 36);
+  
+  text("Ammo: " + spaceship.ammo, width*3/4, 36);
+
+  //For testing
+  text("Accuracy: " + spaceship.accuracy, width/4, 36);
 
 }
 
@@ -74,11 +84,14 @@ let startLoop = () =>{
   rect(5,5,10,10);
 }
 
+//////////////
+// GAMELOOP //
+//////////////
+
 let gameLoop = () =>{
   fill(0,255,0);
   rect(5,5,10,10);
 
-  HUD();
 
   spaceship.update();
   Laser.updateLasers();
@@ -87,6 +100,8 @@ let gameLoop = () =>{
   if(frameCount % 200 == 0){
     Enemy.createEnemies(2);
   }
+
+  HUD();
 }
 
 
@@ -98,7 +113,12 @@ let endLoop = () =>{
   state = stateEnum.STARTSCREEN;
   console.log("RESET");
 }
-  
+
+
+/////////////
+// CONTROL //
+/////////////
+
 function keyPressed() {
   if (key === ' ') {
     spaceship.fire();
@@ -106,56 +126,3 @@ function keyPressed() {
 
 }
 
-
-
-class Enemy{
-
-  static createEnemies(num){
-    for(let i = 0; i < num; i++){
-
-      let pos = createVector(random(0, width), 0);
-      let vel = createVector(random(-1,1), random(.1,2)); 
-
-      let e = new Enemy(pos, vel);
-      enemies.push(e);
-    }
-  }
-
-  static updateEnemies(){
-
-    for(let i = enemies.length-1; i >= 0; i--){
-      let e = enemies[i];
-      e.update();
-      e.render();
-
-      if(e.isOffScreen()){
-        enemies.splice(i, 1);
-      }
-    }
-
-  }
-  constructor(pos, vel){
-    this.pos = pos;
-    this.vel = vel;
-
-    this.rad = 20;
-  }
-
-  isOffScreen(){
-    //console.log(" isOff: " + this.pos);
-    if(this.pos.x < 0 || this.pos.x > width || this.pos.y > height){
-      return true;
-    }
-    return false;
-  }
-
-  update(){
-    this.pos.add(this.vel);
-  }
-
-  render(){
-    fill(255,0,0);
-    rect(this.pos.x, this.pos.y, this.rad*2, this.rad*2);
-
-  }
-}

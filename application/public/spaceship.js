@@ -1,13 +1,19 @@
 
 class Spaceship{
 
-    constructor(pos){
+    constructor(pos, ammo){
       this.pos = pos;
       this.vel = createVector(0,0);
   
       this.acc = .4;
       this.w = 30;
-  
+    
+      this.ammo = ammo;
+      this.accuracy = 0;
+    
+      this.enemiesHit = 0;
+      this.bulletsFired = 0;
+
     }
   
     update(){
@@ -16,17 +22,28 @@ class Spaceship{
       this.move();
       this.bounds();
       this.render();
+      this.calculateAccuracy();
       
     }
   
     fire(){
+      if(this.ammo <= 0){
+          return;
+      }
+      this.bulletsFired++;
+
       let laser = new Laser(  // New vector else laser moves ship
         createVector(this.pos.x, this.pos.y), 
         createVector(this.vel.x, this.vel.y));
       lasers.push(laser);
+      this.ammo --;
+
+    
     }
   
-  
+    calculateAccuracy(){
+        this.accuracy = (this.enemiesHit / this.bulletsFired).toFixed(2);
+    }
   
     control(){
       if(keyIsDown(LEFT_ARROW)){
@@ -55,7 +72,7 @@ class Spaceship{
   
     render(){
       
-      fill(255,0,0);
+      fill(255);
       rect(this.pos.x, this.pos.y, this.w ,50);
     }
   }
@@ -81,6 +98,9 @@ class Spaceship{
         
             enemies.forEach(enemy => {
               if(laser.collision(enemy)){
+                //HIT
+
+                spaceship.enemiesHit++;
                 enemies.splice(enemies.indexOf(enemy), 1);
                 lasers.splice(i, 1);
                 //return;
