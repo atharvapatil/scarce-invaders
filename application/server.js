@@ -49,6 +49,14 @@ io.on('connection', function (socket) {
     tryStartGame();
     
   });
+
+  socket.on('accuracy', function (data) {
+    
+    playerHandler.tryUpdateScore(socket.id, data);
+    
+  });
+
+
   // Listen for this client to disconnect
   socket.on('disconnect', function () {
     //If id is associated with player, remove player from list.
@@ -116,6 +124,16 @@ class PlayerHandler{
       console.log("Player left: " + this.players[indexToRemove].name);
       this.players.splice(indexToRemove, 1);
       this.printPlayers();
+    }
+  }
+
+  tryUpdateScore(id, data){
+    for (let i = 0; i < this.players.length; i++) {
+      let player = this.players[i];
+      if(player.id == id){
+        console.log(player.name + ": accuracy: " + data);
+        player.updateScore(data);
+      }
     }
   }
 

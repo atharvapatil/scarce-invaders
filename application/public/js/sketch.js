@@ -16,6 +16,7 @@ let serverRoom;
 let spaceship;
 let enemies = [];
 let lasers = [];
+let leaderBoard;
 
 let nasafont;
 
@@ -77,6 +78,10 @@ function HUD(){
   //For testing
   text("Accuracy: " + spaceship.accuracy, width/4, 36);
 
+  if(leaderBoard){
+    
+  }
+
 }
 
 let startLoop = () =>{
@@ -91,6 +96,8 @@ let startLoop = () =>{
 let gameLoop = () =>{
   fill(0,255,0);
   rect(5,5,10,10);
+
+  intervalServerUpdate();
 
 
   spaceship.update();
@@ -119,6 +126,12 @@ let endLoop = () =>{
 // CONTROL //
 /////////////
 
+function intervalServerUpdate(){
+  if(frameCount % serverRoom.updateInterval == 0){ //TODO redo this as time function
+    serverRoom.sendAccuracy();
+  }
+}
+
 function keyPressed() {
   if (key === ' ') {
     spaceship.fire();
@@ -126,3 +139,10 @@ function keyPressed() {
 
 }
 
+
+
+class LeaderBoard {
+  constructor(array){
+
+  }
+}

@@ -11,5 +11,8 @@ class Player{
     getScore(){
       return this.score;
     }
+    setScore(val){
+      this.score = val;
+    }
   }
   

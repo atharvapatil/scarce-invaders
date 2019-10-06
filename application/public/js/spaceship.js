@@ -42,7 +42,11 @@ class Spaceship{
     }
   
     calculateAccuracy(){
+      if(this.bulletsFired == 0){
+        return;
+      }
         this.accuracy = (this.enemiesHit / this.bulletsFired).toFixed(2);
+        player.setScore(this.accuracy);
     }
   
     control(){
