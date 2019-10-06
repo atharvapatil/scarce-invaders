@@ -1,19 +1,34 @@
 
 class Spaceship{
 
-    constructor(pos, ammo){
+    constructor(pos){
       this.pos = pos;
       this.vel = createVector(0,0);
   
       this.acc = .4;
       this.w = 30;
     
-      this.ammo = ammo;
-      this.accuracy = 0;
+      this.setAmmo();
+      this.accuracy = "0";
     
       this.enemiesHit = 0;
       this.bulletsFired = 0;
 
+    }
+
+    reset(){
+
+      this.acc = .4;
+      this.w = 30;
+    
+      this.accuracy = 0;
+    
+      this.enemiesHit = 0;
+      this.bulletsFired = 0;
+    }
+
+    setAmmo(val){
+      this.ammo = player.ammo;
     }
   
     update(){
@@ -95,7 +110,7 @@ class Spaceship{
         
             if(laser.isOffScreen()){
               //Remove laser when offscreen
-              console.log("Splicing!");
+              //console.log("Splicing!");
               lasers.splice(i, 1);
               continue;
             }
@@ -118,8 +133,8 @@ class Spaceship{
       this.pos = pos;
       this.vel = createVector(0, -10).add(momentum);
   
-      console.log(this.pos);
-      console.log(this.vel);
+      // console.log(this.pos);
+      // console.log(this.vel);
       this.rad = 5;
     }
   

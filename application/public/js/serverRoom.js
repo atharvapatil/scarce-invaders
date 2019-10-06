@@ -5,23 +5,34 @@ class ServerRoom{
       
       // Listen for start flag
       socket.on('begin', function () {
+        startTime = Date.now();
         //Change state to play state!
         state = stateEnum.GAME;
+        
+        spaceship.setAmmo();
+        spaceship.reset();
       });
       // Listen for start flag
       socket.on('end', function () {
         //Change state to play state!
+        
         state = stateEnum.ENDCREEN;
       });
-  
-      // Listen for score data
-      socket.on('score', function (data) {
-        
+
+      socket.on('ammoSetup', function (data) {
+        console.log("New Ammo: " + data);
+        player.setAmmo(data);
+        spaceship.setAmmo();
       });
 
       // Listen for score data
-      socket.on('playersetup', function (data) {
+      socket.on('playersSetup', function (data) {
         leaderBoard = new LeaderBoard(data);
+      });
+
+      socket.on('playersUpdate', function (data) {
+        
+        leaderBoard.setScores(data);
       });
     }
   
