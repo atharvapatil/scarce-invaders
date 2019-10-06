@@ -12,44 +12,13 @@ app.use(express.static('public'));
 // Create socket connection
 let io = require('socket.io').listen(server);
 
-// Clients in the output namespace
-var outputs = io.of('/output');
-// Listen for output clients to connect
-outputs.on('connection', function (socket) {
-  console.log('An output client connected: ' + socket.id);
+// Listen for clients to connect
+io.on('connection', function (socket) {
+  console.log('A client connected: ' + socket.id);
 
-  // Listen for this output client to disconnect
+  // Listen for this client to disconnect
   socket.on('disconnect', function () {
-    console.log("An output client has disconnected " + socket.id);
+    console.log("A client has disconnected " + socket.id);
   });
 });
 
-// Clients in the input namespace
-let inputs = io.of('/input');
-// Listen for input clients to connect
-inputs.on('connection', function (socket) {
-  console.log('An input client connected: ' + socket.id);
-
-  // Listen for tilt messages
-  socket.on('tilt', function (data) {
-    // Data comes in as whatever was sent, including objects
-    //console.log("Received: 'message' " + data);
-
-    // Send data to all the output clients
-    outputs.emit('tilt', data);
-  });
-
-  // Listen for shake messages
-  socket.on('shake', function (data) {
-    // Data comes in as whatever was sent, including objects
-    //console.log("Received: 'message' " + data);
-
-    // Send data to outputs
-    outputs.emit('shake', data);
-  });
-
-  // Listen for this input client to disconnect
-  socket.on('disconnect', function () {
-    console.log("Client has disconnected " + socket.id);
-  });
-});

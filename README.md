@@ -2,8 +2,6 @@
 
 Probably a dumb experiment by James, Lillian and Atharva.
 
-
-
 - server.js     // Express server with socket.io to handle connections, game start, and score
 - public        // Client side static page with p5 sketch
   - index.html

@@ -1,5 +1,5 @@
 // Open and connect input socket
-let socket = io('/output');
+let socket = io();
 console.log("Arrived")
 // Listen for confirmation of connection
 socket.on('connect', function () {
