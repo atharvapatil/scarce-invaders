@@ -2,10 +2,13 @@
 
 Probably a dumb experiment by James, Lillian and Atharva.
 
-In this first boilerplate code
 
-- Output folder is the screen display
-- Tilt, shake are inputs from phone
+
+- server.js     // Express server with socket.io to handle connections, game start, and score
+- public        // Client side static page with p5 sketch
+  - index.html
+  - sketch.js
+  - style.css
 
 
 Also for reference:
