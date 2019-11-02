@@ -22,13 +22,26 @@ let nasafont;
 
 let startTime;
 
-let TIME = 20;
+let TIME = 50;
+
+let preciseTimeRemaining = TIME;
+
+let bgColour;
+
+let startColour;
+let targetColour;
 
 function preload(){
   nasafont = loadFont('assets/nasalization.ttf');
 }
 
 function setup() {
+  // colorMode(HSB);
+  startColour = color(50,0,10);
+  targetColour = color(0,10,50);
+  
+  
+  bgColour = startColour;
 
   rectMode(CENTER);
   textFont(nasafont);
@@ -54,7 +67,6 @@ function setup() {
 }
 
 function draw() {
-  background(20);
 
   switch(state){
     case stateEnum.STARTSCREEN:
@@ -70,6 +82,24 @@ function draw() {
       console.log("No state: unclear what to do.")
       break;
   }
+}
+
+
+function handleBackground(){
+  push();
+  fill(bgColour);
+  rect(0,0,width * pixelDensity(),height * pixelDensity());
+
+  pop();
+
+  handleColourChange();
+}
+
+function handleColourChange(){
+
+  let t = (TIME - preciseTimeRemaining)  / TIME;
+
+  bgColour = lerpColor(startColour, targetColour, t);
 }
 
 /////////
@@ -106,6 +136,7 @@ function HUD(){
 
 
 let startLoop = () =>{
+  background(bgColour);
   fill(255,0,0);
   rect(5,5,10,10);
   HUD();
@@ -118,6 +149,8 @@ let startLoop = () =>{
 
 
 let gameLoop = () =>{
+  handleBackground();
+
   fill(0,255,0);
   rect(5,5,10,10);
 
@@ -137,6 +170,7 @@ let gameLoop = () =>{
 
 
 let endLoop = () =>{
+  background(targetColour);
   fill(0,0,255);
   rect(5,5,10,10);
 
@@ -158,8 +192,8 @@ let countdown = function(){
   textSize(42);
   textAlign(LEFT);
 
-  let timeRemaining = (startTime/1000 + TIME) - Date.now()/1000;
-  timeRemaining = (timeRemaining%100).toFixed(1);
+  preciseTimeRemaining = (startTime/1000 + TIME) - Date.now()/1000;
+  let timeRemaining = (preciseTimeRemaining%100).toFixed(1);
   if(timeRemaining < 5){
     fill(255,0,0);
   }
@@ -169,7 +203,7 @@ let countdown = function(){
   else{
     fill(255);
   }
-  text("Time Left: " +timeRemaining, width * 3/4 , 36);
+  text("Time Left: " + timeRemaining, width * 3/4 , 36);
 
   if(timeRemaining < 0){
     endGame();

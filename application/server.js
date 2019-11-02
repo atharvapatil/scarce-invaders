@@ -39,7 +39,7 @@ io.on('connection', function (socket) {
 
   if(count % 2 == 0){
     setTimeout(function(){
-      socket.emit("ammoSetup", 20)}, 500);
+      socket.emit("ammoSetup", 30)}, 500);
   }else{
     setTimeout(function(){
       socket.emit("ammoSetup", 200)}, 500);

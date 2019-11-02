@@ -93,6 +93,13 @@ class Spaceship{
       
       fill(255);
       rect(this.pos.x, this.pos.y, this.w ,50);
+
+      // push();
+      //   stroke(255,255,255,10);
+      //   strokeWeight(1);
+      //   line(this.pos.x, this.pos.y, this.pos.x, this.pos.y - 2000);
+
+      // pop();
     }
   }
   
@@ -131,7 +138,7 @@ class Spaceship{
     constructor(pos, momentum){
       
       this.pos = pos;
-      this.vel = createVector(0, -10).add(momentum);
+      this.vel = createVector(random(-2,2), random(-21,-20)).add(momentum);
   
       // console.log(this.pos);
       // console.log(this.vel);
@@ -164,7 +171,7 @@ class Spaceship{
     render(){
       noStroke();
       fill(0,255,0);
-      ellipse(this.pos.x, this.pos.y, this.rad/2, this.rad/2);
+      ellipse(this.pos.x, this.pos.y, this.rad/2, this.rad*2);
     }
     
   }

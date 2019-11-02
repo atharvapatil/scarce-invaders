@@ -6,7 +6,7 @@ class Enemy{
       for(let i = 0; i < num; i++){
   
         let pos = createVector(random(0, width), 0);
-        let vel = createVector(random(-1,1), random(.1,2)); 
+        let vel = createVector(random(-1,1), random(.1,4)); 
   
         let e = new Enemy(pos, vel);
         enemies.push(e);
@@ -34,7 +34,6 @@ class Enemy{
     }
   
     isOffScreen(){
-      //console.log(" isOff: " + this.pos);
       if(this.pos.x < 0 || this.pos.x > width || this.pos.y > height){
         return true;
       }
@@ -46,8 +45,7 @@ class Enemy{
     }
   
     render(){
-      fill(255,0,0);
-      //rect(this.pos.x, this.pos.y, this.rad*2, this.rad*2);
+      fill(255,255,0);
       let r = this.rad;
       triangle(
           this.pos.x , this.pos.y+r, 

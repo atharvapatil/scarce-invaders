@@ -12,10 +12,9 @@ class ServerRoom{
         spaceship.setAmmo();
         spaceship.reset();
       });
-      // Listen for start flag
+
       socket.on('end', function () {
         //Change state to play state!
-        
         state = stateEnum.ENDCREEN;
       });
 
