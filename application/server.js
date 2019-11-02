@@ -18,12 +18,11 @@ let scoreUpdater;
 
 let Activate = function(){
   //Activate runs once server is setup
-
   playerHandler = new PlayerHandler();
 
 }
 
-
+let initialReqPlayers = 25;
 let count = 1;
 
 // Create socket connection
@@ -40,10 +39,10 @@ io.on('connection', function (socket) {
 
   if(count % 2 == 0){
     setTimeout(function(){
-      socket.emit("ammoSetup", 15)}, 500);
+      socket.emit("ammoSetup", 20)}, 500);
   }else{
     setTimeout(function(){
-      socket.emit("ammoSetup", 100)}, 500);
+      socket.emit("ammoSetup", 200)}, 500);
   }
   count++;
 
@@ -125,7 +124,7 @@ class PlayerHandler{
   //Loop through all connections and create player objects
   constructor(){
     this.players = [];
-    this.requiredPlayers = 10;
+    this.requiredPlayers = initialReqPlayers;
   }
   reset(){
     for (let i = 0; i < this.players.length; i++) {

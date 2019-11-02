@@ -84,7 +84,7 @@ function HUD(){
 
   text("Health: " + 100, width/2, 36);
   
-  text("Ammo: " + spaceship.ammo, width*3/4, 36);
+  text("Ammo: " + spaceship.ammo, width/4, 36);
 
   //For testing
   //text("Accuracy: " + spaceship.accuracy, width/4, 36);
@@ -109,6 +109,10 @@ let startLoop = () =>{
   fill(255,0,0);
   rect(5,5,10,10);
   HUD();
+
+  textAlign(CENTER);
+  fill(255);
+  text("Please wait for others to join the fight", width/2, height/2);
 }
 
 
@@ -125,7 +129,7 @@ let gameLoop = () =>{
   Enemy.updateEnemies();
 
   if(frameCount % 200 == 0){
-    Enemy.createEnemies(2);
+    Enemy.createEnemies(3);
   }
 
   HUD();
@@ -156,7 +160,16 @@ let countdown = function(){
 
   let timeRemaining = (startTime/1000 + TIME) - Date.now()/1000;
   timeRemaining = (timeRemaining%100).toFixed(1);
-  text(timeRemaining, width-100, 100);
+  if(timeRemaining < 5){
+    fill(255,0,0);
+  }
+  else if(timeRemaining < 10){
+    fill(255,255,0);
+  }
+  else{
+    fill(255);
+  }
+  text("Time Left: " +timeRemaining, width * 3/4 , 36);
 
   if(timeRemaining < 0){
     endGame();
