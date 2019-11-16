@@ -240,8 +240,6 @@ class LeaderBoard {
 
   setScores(data){
 
-    
-    
     this.players = strToNum(data);
     
     this.array = sortByValue(this.players);
@@ -274,7 +272,8 @@ class LeaderBoard {
 
       textSize(36);
       textAlign(CENTER);
-      text("Your Place: " + i+1, width/2, height/2);
+      let place = parseInt(i)+1;
+      text("Your Place: " + place, width/2, height/2);
       }
       
     }

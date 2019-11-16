@@ -2,6 +2,9 @@
 let port = process.env.PORT || 8000;
 let express = require('express');
 let app = express();
+
+
+
 let server = require('http').createServer(app).listen(port, function () {
   console.log('Server listening at port: ', port);
   Activate();
@@ -14,6 +17,9 @@ app.use(express.static('public'));
 let playerHandler;
 let playing = false;
 let scoreUpdater;
+
+let arrayOfTimes = [15, 30, 50, 70, 90]
+let timeChoice = 0;
 
 
 let Activate = function(){
@@ -39,11 +45,19 @@ io.on('connection', function (socket) {
 
   if(count % 2 == 0){
     setTimeout(function(){
-      socket.emit("ammoSetup", 30)}, 500);
+      socket.emit("ammoSetup", 30)}, 400);
   }else{
     setTimeout(function(){
       socket.emit("ammoSetup", 200)}, 500);
   }
+
+  
+  console.log("SENDING TIME");
+  //Send a value from the time array and increment by 1:
+  setTimeout(function(){
+    socket.emit("timeSetup", arrayOfTimes[timeChoice])
+  }, 500);
+  timeChoice = (timeChoice + 1) % arrayOfTimes.length;
   count++;
 
   socket.on('setNumPlayers', function (data) {

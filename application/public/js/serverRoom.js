@@ -24,6 +24,12 @@ class ServerRoom{
         spaceship.setAmmo();
       });
 
+      socket.on('timeSetup', function (data) {
+        console.log("New Time: " + data);
+        TIME = data;
+        // spaceship.setAmmo();
+      });
+
       // Listen for score data
       socket.on('playersSetup', function (data) {
         leaderBoard = new LeaderBoard(data);
