@@ -12,6 +12,10 @@ class Enemy{
         enemies.push(e);
       }
     }
+
+    static clearEnemies(){
+      enemies = [];
+    }
   
     static updateEnemies(){
   
