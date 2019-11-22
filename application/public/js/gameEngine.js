@@ -115,6 +115,7 @@ class GameEngine {
     }
 
     this.countdown();
+    lowAmmoChecker();
     HUD();
   }
 

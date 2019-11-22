@@ -47,6 +47,18 @@ function handleBackground(){
 }
 
 
+function lowAmmoChecker(){
+    if(spaceship.ammo < 10){
+        textSize(48);
+        textAlign(CENTER);
+  
+        fill(255,0,0);
+        text("LOW AMMO",
+        width / 2, height / 2);
+    }
+
+  }
+
 function unInfStartHUD(){
     
   textSize(48);
@@ -67,8 +79,9 @@ function infStartHUD(){
     textAlign(CENTER);
     fill(255);
     text("Congratulations, you survived the first wave!\n" +
-      "Your score, based on your accuracy, is: " + player.score + "\n" + 
-      "Ready to go again? Press ENTER to begin the final round.",
+      "Your score, based on your ACCURACY, is: " + player.score + "\n\n" + 
+      "Ready to go again? \n"+  
+      "Press ENTER to begin the final round.",
       width / 2, height / 2);
 }
 
