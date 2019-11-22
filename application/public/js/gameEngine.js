@@ -17,8 +17,8 @@ class GameEngine {
 
   setupNewRound() {
     startTime = Date.now();
-    TIME = 30;
-    player.setAmmo(30);
+    TIME = timePerRound;
+    player.setAmmo(ammoPerRound);
     spaceship.setAmmo();
   }
 
@@ -64,8 +64,9 @@ class GameEngine {
 
 
   tutorialGame() {
-    player.setAmmo(1000);
+    player.setAmmo(999);
     this.gameLoop();
+    player.saveScore("tutorial")
   }
 
   uninformedStart() {
@@ -75,6 +76,8 @@ class GameEngine {
 
   uninformedGame() {
     this.gameLoop();
+    
+    player.saveScore("uninformed")
   }
 
   informedStart() {
@@ -86,10 +89,14 @@ class GameEngine {
   informedGame() {
     handleBackgroundColourChange();
     this.gameLoop();
+    
+    player.saveScore("informed")
   }
 
   finalScreen() {
     this.startLoop();
+    endHUD();
+
     //show scores here
   }
 
@@ -154,58 +161,5 @@ class GameEngine {
   }
 }
 
-
-
-// this.updateInterval = 60; // In frames
-
-// // Listen for start flag
-// socket.on('begin', function () {
-//   startTime = Date.now();
-//   //Change state to play state!
-//   state = stateEnum.GAME;
-
-//   spaceship.setAmmo();
-//   spaceship.reset();
-// });
-
-// socket.on('end', function () {
-//   //Change state to play state!
-//   state = stateEnum.ENDCREEN;
-// });
-
-// socket.on('ammoSetup', function (data) {
-//   console.log("New Ammo: " + data);
-//   player.setAmmo(data);
-//   spaceship.setAmmo();
-// });
-
-// socket.on('timeSetup', function (data) {
-//   console.log("New Time: " + data);
-//   TIME = data;
-//   // spaceship.setAmmo();
-// });
-
-// // Listen for score data
-// socket.on('playersSetup', function (data) {
-//   leaderBoard = new LeaderBoard(data);
-// });
-
-// socket.on('playersUpdate', function (data) {
-
-//   leaderBoard.setScores(data);
-// });
-// }
-
-// join(){
-// socket.emit('playerinfo', {name: player.name})
-// }
-
-// sendAccuracy(){
-// socket.emit("accuracy", player.getScore());
-// }
-
-// setNumPlayers(num){
-// socket.emit('setNumPlayers', num)
-// }
 
 

@@ -7,8 +7,12 @@ let nasafont;
 
 let startTime;
 
-let TIME = 30;
-let preciseTimeRemaining = TIME;
+
+let ammoChoices = [30,300];   //CHANGE THIS FOR AMMO AMOUNTS
+let timePerRound = 30         //CHANGE THIS FOR ROUND TIMES
+let TIME = timePerRound;
+let preciseTimeRemaining = timePerRound;
+let ammoPerRound;
 
 let bgColour;
 let startColour;
@@ -23,7 +27,7 @@ function preload() {
 
 function setup() {
 
-  
+  ammoPerRound = ammoChoices[ Math.round(random(0.0,1.0)) ];
   startColour = color(50, 0, 10);
   targetColour = color(0, 10, 50);
   bgColour = startColour;
@@ -39,7 +43,6 @@ function setup() {
   spaceship = new Spaceship(createVector(width / 2, height - 50));
 
   Enemy.createEnemies(10);
-
 
 
 }

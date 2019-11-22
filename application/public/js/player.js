@@ -3,7 +3,9 @@ class Player{
     constructor(){
       this.name = Player.setName();
       this.score = "0.00";
-      this.ammo = 25;
+      this.ammo = ammoPerRound;
+
+      this.totalScores = {};
     }
 
     setAmmo(val){
@@ -21,6 +23,14 @@ class Player{
     }
     setScore(val){
       this.score = val;
+    }
+
+    saveScore(round){
+      this.totalScores[round] = this.score;
+    }
+
+    getTotalScore(round){
+      return this.totalScores;
     }
 
     static setName(){

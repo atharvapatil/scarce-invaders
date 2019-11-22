@@ -36,6 +36,8 @@ function handleBackground(){
 
 
   function tutStartHUD(){
+      
+  textSize(48);
     textAlign(CENTER);
     fill(255);
     text("Use the left and right ARROW KEYS to move your ship\n" +
@@ -46,22 +48,46 @@ function handleBackground(){
 
 
 function unInfStartHUD(){
+    
+  textSize(48);
     textAlign(CENTER);
     fill(255);
-    text("Congratulations, you are now prepared to fight for read!\n" +
-      "You have " + player.ammo + "lasers this next round. Good luck!\n" + 
+    text("Congratulations, you are now prepared to fight for real!\n" +
+      "You have " + player.ammo + " lasers this next round. Good luck!\n" + 
       "Press ENTER to play for realz",
       width / 2, height / 2);
+
+    
 }
 
 
 function infStartHUD(){
+    
+  textSize(48);
     textAlign(CENTER);
     fill(255);
     text("Congratulations, you survived the first wave!\n" +
-      "Your score, based on your accuracy, is : [SCORE]\n" + 
+      "Your score, based on your accuracy, is: " + player.score + "\n" + 
       "Ready to go again? Press ENTER to begin the final round.",
       width / 2, height / 2);
+}
+
+function endHUD(){
+    
+  textSize(48);
+    textAlign(CENTER);
+    fill(255);
+    text("The Game is over. Your scores each round were:",
+      width / 2, height / 2);
+
+    let scores = player.getTotalScore();
+    text("Tutorial round: " + scores["tutorial"],
+    width / 2, height / 2 + 50);
+    text("First round: " + scores["uninformed"],
+    width / 2, height / 2 + 100);
+    text("Second round: " + scores["informed"],
+    width / 2, height / 2 + 150);
+
 }
 
 
