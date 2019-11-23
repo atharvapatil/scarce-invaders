@@ -2,8 +2,8 @@
 class Player{
     constructor(){
       this.name = Player.setName();
-      this.score = "0.00";
-      this.ammo = ammoPerRound;
+      this.score = 0;
+      this.ammo = 999;    //Start Case
 
       this.totalScores = {};
     }
@@ -14,7 +14,10 @@ class Player{
       spaceship.setAmmo();
     }
 
-  
+    resetScore(){
+      this.score = 0;
+    }
+
     getName(){
       return this.name;
     }

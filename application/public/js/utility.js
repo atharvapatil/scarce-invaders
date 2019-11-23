@@ -59,13 +59,13 @@ function lowAmmoChecker(){
 
   }
 
-function unInfStartHUD(){
+function highAmmoHUD(){
     
   textSize(48);
     textAlign(CENTER);
     fill(255);
     text("Congratulations, you are now prepared to fight for real!\n" +
-      "You have " + player.ammo + " lasers this next round. Good luck!\n" + 
+      "You have " + player.ammo + " lasers this round. Good luck!\n" + 
       "Press ENTER to play for realz",
       width / 2, height / 2);
 
@@ -73,12 +73,24 @@ function unInfStartHUD(){
 }
 
 
-function infStartHUD(){
+function lowAmmoHUD(){
     
   textSize(48);
     textAlign(CENTER);
     fill(255);
-    text("Congratulations, you survived the first wave!\n" +
+    text("Congratulations, you survived the second wave!\n" +
+      "Next round you have much less ammo - be careful! \n\n" + 
+      "Ready to go again? \n"+  
+      "Press ENTER to begin the next round.",
+      width / 2, height / 2);
+}
+
+function colourChangeHUD(){
+    
+  textSize(48);
+    textAlign(CENTER);
+    fill(255);
+    text("Congratulations, you survived the third wave!\n" +
       "Your score, based on your ACCURACY, is: " + player.score + "\n\n" + 
       "Ready to go again? \n"+  
       "Press ENTER to begin the final round.",
@@ -96,10 +108,12 @@ function endHUD(){
     let scores = player.getTotalScore();
     text("Tutorial round: " + scores["tutorial"],
     width / 2, height / 2 + 50);
-    text("First round: " + scores["uninformed"],
+    text("First round: " + scores["highAmmo"],
     width / 2, height / 2 + 100);
-    text("Second round: " + scores["informed"],
+    text("Second round: " + scores["lowAmmo"],
     width / 2, height / 2 + 150);
+    text("Final round: " + scores["colourChange"],
+    width / 2, height / 2 + 200);
 
 }
 

@@ -12,7 +12,12 @@ let ammoChoices = [30,300];   //CHANGE THIS FOR AMMO AMOUNTS
 let timePerRound = 30         //CHANGE THIS FOR ROUND TIMES
 let TIME = timePerRound;
 let preciseTimeRemaining = timePerRound;
-let ammoPerRound;
+let ammoPerRound = [
+  999,999,
+  300,300,
+  30,30,
+  300,300
+];
 
 let bgColour;
 let startColour;
@@ -27,9 +32,10 @@ function preload() {
 
 function setup() {
 
-  ammoPerRound = ammoChoices[ Math.round(random(0.0,1.0)) ];
-  startColour = color(50, 0, 10);
-  targetColour = color(0, 10, 50);
+  // ammoPerRound = ammoChoices[ Math.round(random(0.0,1.0)) ];
+
+  startColour = color(75, 0, 10);
+  targetColour = color(0, 10, 75);
   bgColour = startColour;
 
   let cnv = createCanvas(window.innerWidth, window.innerHeight);
@@ -56,6 +62,8 @@ function draw() {
 
 
   gameEngine.mainLoop();
+
+  console.log(player.score);
 
 }
 

@@ -2,11 +2,13 @@
 const states = {
   TUTORIAL_START: 0,
   TUTORIAL_GAME: 1,
-  UNINFORMED_START: 2,
-  UNINFORMED_GAME: 3,
-  INFORMED_START: 4,
-  INFORMED_GAME: 5,
-  END: 6
+  HIGH_START: 2,
+  HIGH_GAME: 3,
+  LOW_START: 4,
+  LOW_GAME: 5,
+  COLOURCHANGE_START: 6,
+  COLOURCHANGE_GAME: 7,
+  END: 8
 }
 
 
@@ -18,7 +20,8 @@ class GameEngine {
   setupNewRound() {
     startTime = Date.now();
     TIME = timePerRound;
-    player.setAmmo(ammoPerRound);
+    player.setAmmo(ammoPerRound[ (this.state+1) % states.END]);   //Use states to access index of list
+    spaceship.reset();
     spaceship.setAmmo();
   }
 
@@ -34,17 +37,23 @@ class GameEngine {
       case states.TUTORIAL_GAME:
         this.tutorialGame();
         break;
-      case states.UNINFORMED_START:
-        this.uninformedStart();
+      case states.HIGH_START:
+        this.highAmmoStart();
         break;
-      case states.UNINFORMED_GAME:
-        this.uninformedGame();
+      case states.HIGH_GAME:
+        this.highAmmoGame();
         break;
-      case states.INFORMED_START:
-        this.informedStart();
+      case states.LOW_START:
+        this.lowAmmoStart();
         break;
-      case states.INFORMED_GAME:
-        this.informedGame();
+      case states.LOW_GAME:
+        this.lowAmmoGame();
+        break;
+      case states.COLOURCHANGE_START:
+        this.colourChangeStart();
+        break;
+      case states.COLOURCHANGE_GAME:
+        this.colourChangeGame();
         break;
       case states.END:
         this.finalScreen();
@@ -56,41 +65,47 @@ class GameEngine {
   }
 
 
+  //ROUND 1
   tutorialStart() {
     HUD();
     tutStartHUD();
-    
   }
-
-
   tutorialGame() {
     player.setAmmo(999);
     this.gameLoop();
     player.saveScore("tutorial")
   }
 
-  uninformedStart() {
+  //ROUND 2
+  highAmmoStart() {
     this.startLoop();
-    unInfStartHUD();
+    highAmmoHUD();
   } 
-
-  uninformedGame() {
+  highAmmoGame() {
     this.gameLoop();
     
-    player.saveScore("uninformed")
+    player.saveScore("highAmmo")
   }
 
-  informedStart() {
+  //ROUND 3
+  lowAmmoStart() {
     this.startLoop();
-    
-    infStartHUD();
+    lowAmmoHUD();
+  }
+  lowAmmoGame() {
+    this.gameLoop();
+    player.saveScore("lowAmmo")
   }
 
-  informedGame() {
+  colourChangeStart() {
+    this.startLoop();
+    colourChangeHUD();
+  }
+
+  colourChangeGame() {
     handleBackgroundColourChange();
     this.gameLoop();
-    
-    player.saveScore("informed")
+    player.saveScore("colourChange")
   }
 
   finalScreen() {
@@ -111,7 +126,7 @@ class GameEngine {
     Enemy.updateEnemies();
 
     if (frameCount % 200 == 0) {
-      Enemy.createEnemies(3);
+      Enemy.createEnemies(4);
     }
 
     this.countdown();
